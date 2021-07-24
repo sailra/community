@@ -1,0 +1,28 @@
+.main{
+    margin: 30px;
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius:11px;
+}
+body{
+    background-color: #e7e7e7;
+}
+.right-button{
+    float: right;
+    margin-top: 15px;
+}
+.left-body{
+    margin-top: 33px;
+}
+.imga{
+    height: 50px;width: 50px;
+}
+.test{
+    padding-top: 5px;
+}
+.text{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}

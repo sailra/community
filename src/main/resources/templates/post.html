@@ -18,7 +18,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">学习论坛</span>
                 </button>
-                <a class="navbar-brand" href="#">学习论坛</a>
+                <a class="navbar-brand" href="/">学习论坛</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -43,39 +43,45 @@
             </div>
         </div>
     </nav>
-    <!--导航条结束-->
-    <!--中心帖子页面-->
-
+    <!--    导航条结束-->
+    <!--    中心页面-->
     <div class="container-fluid main">
         <div class="row">
             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                <h3><span class="glyphicon glyphicon-education" aria-hidden="true">帖子</span></h3>
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                <h3 style="display: inline; margin-left: 10px;">帖子</h3>
                 <hr/>
-
-                <div class="media" th:each="post:${postList}">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img  class="media-object imga" th:src="${post.user.avatar_url}">
-                        </a>
+                <form action="/post" method="post">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="标题">
                     </div>
-                    <div class="media-body test">
-                        <h4 class="media-heading" th:text="${post.getTitle()}"></h4>
-                        <span class="text"><span th:text="${post.getNumber_of_comments()}"></span> 个回复 • <span th:text="${post.getNumber_of_readers()}"></span> 次浏览 •  <span th:text="${#dates.format(post.gmt_create, 'yyyy-MMMMM-dd')}"></span></span>
+                    <div class="form-group">
+                        <label for="title">帖子内容</label>
+                        <textarea class="form-control" name="content" id="content" cols="30" rows="10" placeholder="请遵守论坛发言规则！"></textarea>
                     </div>
-                </div>
 
-
+                    <div class="form-group">
+                        <label for="tag">选择标签</label>
+                        <input type="text" class="form-control" id="tag" name="tag">
+                    </div>
+                    <button type="submit" class="btn btn-success right-button" th:if="${error==null}">发布</button>
+                    <button type="button" class="btn btn-danger right-button" th:unless="${error==null}" th:text="${error}"></button>
+                </form>
 
             </div>
             <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
-                <h3>热门话题</h3>
-
+                <h3>发帖规则</h3>
+                <div class="left-body">
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;严禁网友在版块内散播或制造任何与事实不符的言论。您的任何不良言论都将可能给第三方造成恶劣影响,相信您也不想受到同等待遇,请理解配合。</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;严禁将帖子发至无关版面,请选择对应版块发贴,以维护论坛的系统性和整洁性。</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;帖子标题请尽量与帖子内容相符，恶意欺骗性质或者标题过于刺激者，删除。</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;严禁因观点不同或讨论立场有异在版块上发表针对他人的嘲笑、讽刺、漫骂等人身攻击言论，盼会员间能雅量和谐、理性讨论。</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;严禁发布法 轮 功等境外反华内容，一经发现，直接封ID，并将IP地址发至公安部门备案。</p>
+                </div>
             </div>
         </div>
-    </div>
-
-
-    <!--中心帖子帖子页面结束-->
-
+        </div>
+    <!--    中心页面结束-->
 </body>
 </html>
