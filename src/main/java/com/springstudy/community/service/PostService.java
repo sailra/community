@@ -1,11 +1,11 @@
 package com.springstudy.community.service;
 
+import com.springstudy.community.dto.PageDTO;
 import com.springstudy.community.dto.PostDTO;
 import com.springstudy.community.mapper.PostsMapper;
 import com.springstudy.community.mapper.UserMapper;
 import com.springstudy.community.model.Post;
 import com.springstudy.community.model.User;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,23 @@ public class PostService {
     @Autowired
     PostsMapper postsMapper;
 
-    public List<PostDTO> list() {
-        List<Post> postList = postsMapper.list();
+    public PageDTO list(Integer page, Integer size) {
+
+
+        PageDTO pageDTO = new PageDTO();
+        Integer total = postsMapper.countNumber();
+        pageDTO.setPageInformation(total, page, size);
+
+        if(page < 1){
+            page = 1;
+        }else if(page > pageDTO.getTotalPage()){
+            page = pageDTO.getTotalPage();
+        }
+
+        Integer limitSize = size*(page-1);
+        List<Post> postList = postsMapper.list(limitSize, size);
         List<PostDTO> postDTOList = new ArrayList<>();
+
         for (Post post : postList) {
             User user = userMapper.findById(post.getCreateId());
             PostDTO postDTO = new PostDTO();
@@ -32,6 +46,8 @@ public class PostService {
             postDTO.setUser(user);
             postDTOList.add(postDTO);
         }
-        return postDTOList;
+        pageDTO.setPostList(postDTOList);
+        return pageDTO;
     }
+
 }

@@ -52,7 +52,7 @@
                 <h3><span class="glyphicon glyphicon-education" aria-hidden="true">帖子</span></h3>
                 <hr/>
 
-                <div class="media" th:each="post:${postList}">
+                <div class="media" th:each="post:${pageList.postList}">
                     <div class="media-left media-middle">
                         <a href="#">
                             <img  class="media-object imga" th:src="${post.user.avatar_url}">
@@ -63,9 +63,36 @@
                         <span class="text"><span th:text="${post.getNumber_of_comments()}"></span> 个回复 • <span th:text="${post.getNumber_of_readers()}"></span> 次浏览 •  <span th:text="${#dates.format(post.gmt_create, 'yyyy-MMMMM-dd')}"></span></span>
                     </div>
                 </div>
+                <!--分页-->
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${pageList.endExhibition}">
+                            <a href="/?page=1" aria-label="Previous" >
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageList.firstExhibition}">
+                            <a th:href="@{/(page=${pageList.page+-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="page:${pageList.pages}" th:class="${pageList.page == page}?'active':''"><a th:href="@{/(page=${page})}" th:text="${page}"></a></li>
+                        <li th:if="${pageList.showNext}">
+                            <a th:href="@{/(page=${pageList.page+1})}" aria-label="Previous">
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </a>
+                        </li>
+                        <li th:if="${pageList.showEndPage}">
+                            <a th:href="@{/(page=${pageList.totalPage})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
 
-
+                <!--分页结束-->
             </div>
             <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
                 <h3>热门话题</h3>
@@ -73,8 +100,6 @@
             </div>
         </div>
     </div>
-
-
     <!--中心帖子帖子页面结束-->
 
 </body>
